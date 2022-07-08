@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="./style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div>
+        <button id="dialog1Button">Open Dialog1</button>
+        <button id="dialog2Button">Open Dialog2</button>
+    </div>
+
+    <script type="module">
+        import { showIFrameDialog } from "./lib.js";
+
+        document.addEventListener("DOMContentLoaded", init);
+
+        function init() {
+            const button1 = document.querySelector("#dialog1Button");
+            const button2 = document.querySelector("#dialog2Button");
+
+            button1.addEventListener("click", () => {
+                showIFrameDialog({ src: "./frame1.html" })
+                    .then((x) => {
+                        console.log("index.html", x);
+                    });
+            });
+
+            button2.addEventListener("click", () => {
+                showIFrameDialog({ src: "./frame2.html" })
+                    .then(x => {
+                        console.log("index.html", x);
+                    });
+            });
+        }
+    </script>
+</body>

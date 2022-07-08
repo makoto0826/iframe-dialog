@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="./style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div>Frame2</div>
+    <div>
+        <button id="openButton">Open Frame3</button>
+        <button id="closeButton">Close</button>
+    </div>
+
+    <script type="module">
+        import { showIFrameDialog, createCloseCallback } from "./lib.js";
+        let ports;
+        let callback;
+
+        window.onmessage = e => {
+            ports = e.ports;
+            callback = createCloseCallback(ports);
+        }
+
+        document.addEventListener("DOMContentLoaded", init);
+
+        function init() {
+            const openButton = document.querySelector("#openButton");
+            const closeButton = document.querySelector("#closeButton");
+
+            openButton.addEventListener("click", () => showIFrameDialog({ src: "./frame3.html", ports }));
+            closeButton.addEventListener("click", () => callback());
+        }
+    </script>
+</body>

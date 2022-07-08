@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+
+<head>
+    <link href="./style.css" rel="stylesheet" />
+</head>
+
+<body>
+    <div>Frame1</div>
+    <div>
+        <button id="closeButton">Close</button>
+        <input type="text" id="textbox" />
+        <button id="okButton">OK</button>
+    </div>
+
+    <script type="module">
+        import { createCloseCallback } from './lib.js';
+        let callback;
+
+        window.onmessage = e => { callback = createCloseCallback(e.ports); }
+        document.addEventListener("DOMContentLoaded", init);
+
+        function init() {
+            const closeButton = document.querySelector("#closeButton");
+            const okButton = document.querySelector("#okButton");
+            const textbox = document.querySelector("#textbox");
+
+            closeButton.addEventListener("click", () => callback());
+            okButton.addEventListener("click", () => callback(textbox.value));
+        }
+    </script>
+</body>
