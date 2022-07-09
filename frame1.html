@@ -15,17 +15,16 @@
 
     <script type="module">
       import { closeIFrameDialog } from "./lib.js";
-      let ports;
 
       window.onmessage = (e) => {
         if (e.data.type === "init") {
-          ports = e.ports;
+          init(e.data.params, e.ports);
         }
       };
 
-      document.addEventListener("DOMContentLoaded", init);
+      function init(params, ports) {
+        console.log("init", params, ports);
 
-      function init() {
         const ok = document.querySelector("#ok");
         const textbox = document.querySelector("#textbox");
 

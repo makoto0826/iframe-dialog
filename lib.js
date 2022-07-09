@@ -10,6 +10,8 @@ import "./style.css";
 
 /**
  * @typedef OpenIFrameDialogOptions
+ * @property {string} src
+ * @property {any} params
  * @property {DialogRect?} rect
  * @property {Array<MessagePort>?} ports
  */
@@ -20,6 +22,7 @@ import "./style.css";
 export function openIFrameDialog(options) {
   return new Promise((resolve) => {
     const channel = new MessageChannel();
+
     const ports = [...(options.ports ?? []), channel.port2];
     const { dialog, frame } = createElements(options);
 
@@ -32,7 +35,11 @@ export function openIFrameDialog(options) {
 
     dialog.addEventListener("close", () => document.body.removeChild(dialog));
     frame.addEventListener("load", () =>
-      frame.contentWindow.postMessage({ type: "init" }, "*", ports)
+      frame.contentWindow.postMessage(
+        { type: "init", params: options.params },
+        "*",
+        ports
+      )
     );
 
     dialog.appendChild(frame);
