@@ -1,13 +1,12 @@
 {
   "name": "iframe-dialog",
-  "version": "1.0.0",
-  "description": "",
-  "devDependencies": {
-    "lite-server": "^2.6.1"
-  },
+  "version": "0.0.1",
   "scripts": {
-    "dev" : "lite-server"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
   },
-  "author": "",
-  "license": "ISC"
+  "devDependencies": {
+    "vite": "^2.9.9"
+  }
 }

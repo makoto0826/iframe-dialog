@@ -1,37 +1,36 @@
 <!DOCTYPE html>
-
-<head>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Sample</title>
     <link href="./style.css" rel="stylesheet" />
-</head>
-
-<body>
+  </head>
+  <body>
     <div>
-        <button id="dialog1Button">Open Dialog1</button>
-        <button id="dialog2Button">Open Dialog2</button>
+      <button id="button1">Open Dialog1</button>
+      <button id="button2">Open Dialog2</button>
     </div>
-
     <script type="module">
-        import { showIFrameDialog } from "./lib.js";
+      import { openIFrameDialog } from "./lib.js";
 
-        document.addEventListener("DOMContentLoaded", init);
+      document.addEventListener("DOMContentLoaded", init);
 
-        function init() {
-            const button1 = document.querySelector("#dialog1Button");
-            const button2 = document.querySelector("#dialog2Button");
+      function init() {
+        const button1 = document.querySelector("#button1");
+        const button2 = document.querySelector("#button2");
 
-            button1.addEventListener("click", () => {
-                showIFrameDialog({ src: "./frame1.html" })
-                    .then((x) => {
-                        console.log("index.html", x);
-                    });
-            });
+        button1.addEventListener("click", () => {
+          openIFrameDialog({ src: "./frame1.html" }).then((x) => {
+            console.log("index.html", x);
+          });
+        });
 
-            button2.addEventListener("click", () => {
-                showIFrameDialog({ src: "./frame2.html" })
-                    .then(x => {
-                        console.log("index.html", x);
-                    });
-            });
-        }
+        button2.addEventListener("click", () => {
+          openIFrameDialog({ src: "./frame2.html" }).then((x) => {
+            console.log("index.html", x);
+          });
+        });
+      }
     </script>
-</body>
+  </body>
+</html>

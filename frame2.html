@@ -1,34 +1,40 @@
 <!DOCTYPE html>
-
-<head>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frame2</title>
     <link href="./style.css" rel="stylesheet" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div>Frame2</div>
     <div>
-        <button id="openButton">Open Frame3</button>
-        <button id="closeButton">Close</button>
+      <button id="openButton">Open Frame3</button>
+      <button id="closeButton">Close</button>
     </div>
 
     <script type="module">
-        import { showIFrameDialog, createCloseCallback } from "./lib.js";
-        let ports;
-        let callback;
+      import { openIFrameDialog, closeIFrameDialog } from "./lib.js";
 
-        window.onmessage = e => {
-            ports = e.ports;
-            callback = createCloseCallback(ports);
+      let ports;
+
+      window.onmessage = (e) => {
+        if (e.data.type === "init") {
+          ports = e.ports;
         }
+      };
 
-        document.addEventListener("DOMContentLoaded", init);
+      document.addEventListener("DOMContentLoaded", init);
 
-        function init() {
-            const openButton = document.querySelector("#openButton");
-            const closeButton = document.querySelector("#closeButton");
+      function init() {
+        const openButton = document.querySelector("#openButton");
+        const closeButton = document.querySelector("#closeButton");
 
-            openButton.addEventListener("click", () => showIFrameDialog({ src: "./frame3.html", ports }));
-            closeButton.addEventListener("click", () => callback());
-        }
+        openButton.addEventListener("click", () =>
+          openIFrameDialog({ src: "./frame3.html" })
+        );
+        closeButton.addEventListener("click", () => closeIFrameDialog("close",ports));
+      }
     </script>
-</body>
+  </body>
+</html>

@@ -1,31 +1,44 @@
 <!DOCTYPE html>
-
-<head>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Frame1</title>
     <link href="./style.css" rel="stylesheet" />
-</head>
+  </head>
 
-<body>
+  <body>
     <div>Frame1</div>
     <div>
-        <button id="closeButton">Close</button>
-        <input type="text" id="textbox" />
-        <button id="okButton">OK</button>
+      <button id="closeButton">Close</button>
+      <input type="text" id="textbox" value="1" />
+      <button id="okButton">OK</button>
     </div>
 
     <script type="module">
-        import { createCloseCallback } from './lib.js';
-        let callback;
+      import { closeIFrameDialog } from "./lib.js";
 
-        window.onmessage = e => { callback = createCloseCallback(e.ports); }
-        document.addEventListener("DOMContentLoaded", init);
+      let ports;
 
-        function init() {
-            const closeButton = document.querySelector("#closeButton");
-            const okButton = document.querySelector("#okButton");
-            const textbox = document.querySelector("#textbox");
-
-            closeButton.addEventListener("click", () => callback());
-            okButton.addEventListener("click", () => callback(textbox.value));
+      window.onmessage = (e) => {
+        if (e.data.type === "init") {
+          ports = e.ports;
         }
+      };
+
+      document.addEventListener("DOMContentLoaded", init);
+
+      function init() {
+        const closeButton = document.querySelector("#closeButton");
+        const okButton = document.querySelector("#okButton");
+        const textbox = document.querySelector("#textbox");
+
+        closeButton.addEventListener("click", () =>{
+          closeIFrameDialog("close", ports)
+        });
+        okButton.addEventListener("click", () =>
+          closeIFrameDialog(textbox.value, ports)
+        );
+      }
     </script>
-</body>
+  </body>
+</html>
