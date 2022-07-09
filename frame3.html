@@ -9,14 +9,12 @@
   <body>
     <div>Frame3</div>
     <div>
-      <button id="closeButton">Close</button>
-      <button id="okButton">OK</button>
+      <button id="ok">OK</button>
       <input type="text" id="textbox" value="1" />
     </div>
 
     <script type="module">
       import { closeIFrameDialog } from "./lib.js";
-
       let ports;
 
       window.onmessage = (e) => {
@@ -28,14 +26,10 @@
       document.addEventListener("DOMContentLoaded", init);
 
       function init() {
-        const closeButton = document.querySelector("#closeButton");
-        const okButton = document.querySelector("#okButton");
+        const ok = document.querySelector("#ok");
         const textbox = document.querySelector("#textbox");
 
-        closeButton.addEventListener("click", () =>
-          closeIFrameDialog("close", ports)
-        );
-        okButton.addEventListener("click", () =>
+        ok.addEventListener("click", () =>
           closeIFrameDialog(textbox.value, ports)
         );
       }

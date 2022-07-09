@@ -1,5 +1,22 @@
 import "./style.css";
 
+/**
+ * @typedef DialogRect
+ * @property {number} top
+ * @property {number} left
+ * @property {number} width
+ * @property {number} height
+ */
+
+/**
+ * @typedef OpenIFrameDialogOptions
+ * @property {DialogRect?} rect
+ * @property {Array<MessagePort>?} ports
+ */
+
+/**
+ * @param {OpenIFrameDialogOptions} options
+ */
 export function openIFrameDialog(options) {
   return new Promise((resolve) => {
     const channel = new MessageChannel();
@@ -25,6 +42,10 @@ export function openIFrameDialog(options) {
   });
 }
 
+/**
+ * @param {any} value
+ * @param {Array<MessagePort>} ports
+ */
 export function closeIFrameDialog(value, ports) {
   const message = { type: "close", value };
 
@@ -33,17 +54,31 @@ export function closeIFrameDialog(value, ports) {
   }
 }
 
+const DIALOG_RECT_NAME_LIST = ["top", "left", "width", "height"];
+const DIALOG_CSS = "iframe-dialog__dialog";
+const DIALOG_SHADOW_CSS = "iframe-dialog__dialog--shadow";
+const IFRAME_CSS = "iframe-dialog__iframe";
+
+/**
+ * @param {OpenIFrameDialogOptions} options
+ */
 function createElements(options) {
+  const { src, rect } = options;
+
   const dialog = document.createElement("dialog");
   const frame = document.createElement("iframe");
-  const style = options?.style ?? {
-    dialog: "dialog",
-    frame: "frame",
-  };
 
-  dialog.className = style.dialog;
-  frame.className = style.frame;
-  frame.src = options.src;
+  dialog.classList.add(DIALOG_CSS);
+  frame.classList.add(IFRAME_CSS);
+  frame.src = src;
+
+  if (rect) {
+    DIALOG_RECT_NAME_LIST.forEach((name) => {
+      dialog.style[name] = `${rect[name]}px`;
+    });
+
+    dialog.classList.add(DIALOG_SHADOW_CSS);
+  }
 
   return { dialog, frame };
 }

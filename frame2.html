@@ -9,13 +9,12 @@
   <body>
     <div>Frame2</div>
     <div>
-      <button id="openButton">Open Frame3</button>
-      <button id="closeButton">Close</button>
+      <button id="close">Close</button>
+      <button id="open">Open Frame3</button>
     </div>
 
     <script type="module">
       import { openIFrameDialog, closeIFrameDialog } from "./lib.js";
-
       let ports;
 
       window.onmessage = (e) => {
@@ -27,13 +26,15 @@
       document.addEventListener("DOMContentLoaded", init);
 
       function init() {
-        const openButton = document.querySelector("#openButton");
-        const closeButton = document.querySelector("#closeButton");
+        const open = document.querySelector("#open");
+        const close = document.querySelector("#close");
 
-        openButton.addEventListener("click", () =>
+        open.addEventListener("click", () =>
           openIFrameDialog({ src: "./frame3.html" })
         );
-        closeButton.addEventListener("click", () => closeIFrameDialog("close",ports));
+        close.addEventListener("click", () =>
+          closeIFrameDialog("close", ports)
+        );
       }
     </script>
   </body>

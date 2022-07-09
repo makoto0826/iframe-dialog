@@ -1,25 +1,19 @@
-* {
-  box-sizing: border-box;
-}
-
-html,
-body {
+.iframe-dialog__iframe,
+.iframe-dialog__dialog {
   padding: 0;
   margin: 0;
-  height: 100vh;
-}
-
-.frame,
-.dialog {
-  padding: 0;
-  margin: 0;
+  border: 0;
   max-width: 100%;
   max-height: 100%;
   overflow: hidden;
 }
 
-.frame {
-  border: 0;
+.iframe-dialog__iframe {
   width: 100vw;
   height: 100vh;
+}
+
+.iframe-dialog__dialog--shadow {
+  box-shadow: rgb(0 0 0 / 20%) 0px 2px 1px -1px,
+    rgb(0 0 0 / 14%) 0px 1px 1px 0px, rgb(0 0 0 / 12%) 0px 1px 3px 0px;
 }

@@ -7,12 +7,11 @@
   </head>
   <body>
     <div>
-      <button id="button1">Open Dialog1</button>
-      <button id="button2">Open Dialog2</button>
+      <button id="button1">Open Frame1</button>
+      <button id="button2">Open Frame2</button>
     </div>
     <script type="module">
       import { openIFrameDialog } from "./lib.js";
-
       document.addEventListener("DOMContentLoaded", init);
 
       function init() {
@@ -20,7 +19,15 @@
         const button2 = document.querySelector("#button2");
 
         button1.addEventListener("click", () => {
-          openIFrameDialog({ src: "./frame1.html" }).then((x) => {
+          openIFrameDialog({
+            src: "./frame1.html",
+            rect: {
+              top: 100,
+              left: 100,
+              width: 320,
+              height: 240,
+            },
+          }).then((x) => {
             console.log("index.html", x);
           });
         });
